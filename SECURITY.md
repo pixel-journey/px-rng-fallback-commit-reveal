@@ -1,11 +1,11 @@
-# Security
+# Security notes — commit-reveal
 
-| Surface | Closed by |
+| Mitigated | Behavior |
 | --- | --- |
-| Wrong preimage | mismatch refused |
-| Slash before timeout | too early |
-| Same account both sides | same party |
-| Bad hash shape | 64-hex required |
-| Zero bond | refused |
+| Bad phase transitions | refused |
+| Hash / secret format | refused |
+| Mismatch | no false settle; slash still possible |
+| Early slash | refused |
+| Same party open | refused |
 
-Not claimed: live custody of the bond, wasm, orng.wax.
+Production: real token bond escrow, auth on commit/reveal/slash, bond economic design. Prefer oracle over this pattern on WAX.
