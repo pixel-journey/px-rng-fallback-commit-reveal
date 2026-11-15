@@ -1,31 +1,23 @@
-# Education — commit / reveal as an RNG fallback
+# Education — commit-reveal fallback
+
+Use when orng.wax is unavailable. House posts a bond and a commitment. Player waits for reveal. If the house never reveals by the deadline, the bond is slashed to the player.
 
 ## Beginner
 
-House commits to a hash of a secret. Player waits. House must reveal the preimage before timeout. If it does not, the bond goes to the player.
-
-This is **not** WAX ORNG. It is a two-party game when an oracle is unavailable.
+1. Open a round with distinct player and house and positive bond.
+2. House commits a 64-hex hash.
+3. House reveals the preimage or times out.
 
 ## Intermediate
 
-| Step | Rule |
-| --- | --- |
-| open | Distinct player and house; bond > 0; timeout > 0 |
-| commit | 64 lowercase hex hash |
-| reveal | `sha256(secret)` must equal the stored hash |
-| settle | After a good reveal, bond returns to house |
-| slash | Only at or after `nowTs + timeoutSec`; pays player |
-
-A wrong reveal does **not** move the phase. The house can still be slashed later if it never reveals the matching secret.
+Slash only at `nowTs >= openTs + timeoutSec`. Mismatch reveal must not change phase. Settle after reveal returns bond to house.
 
 ## Masterclass (not in this repo)
 
-- Holding the bond as a real token transfer.
-- `require_auth` of house on commit/reveal and player on open.
-- Combining the revealed bit with a player seed so neither party alone picks the outcome.
+Live chain TAPOS delay, real sha256 in WASM, multi-round tables.
 
 ## Outcomes
 
-1. Draw the honest path and the slash path.
-2. Show why mismatch leaves the round slashable.
-3. State that `coinFromSecret` is teaching-only and uses the first byte.
+1. Show slash pays player after timeout.
+2. Show settle after reveal pays house.
+3. Show mismatch and early slash refuse without state corruption.
