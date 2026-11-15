@@ -1,11 +1,5 @@
-# Security notes — commit-reveal
+# Security
 
-| Mitigated | Behavior |
-| --- | --- |
-| Bad phase transitions | refused |
-| Hash / secret format | refused |
-| Mismatch | no false settle; slash still possible |
-| Early slash | refused |
-| Same party open | refused |
+Closed: same party, zero bond, bad hash, mismatch reveal, early slash, post-settle slash, independent rounds.
 
-Production: real token bond escrow, auth on commit/reveal/slash, bond economic design. Prefer oracle over this pattern on WAX.
+Not closed: no chain signatures, no bond custody, `sha256` is Node crypto not Antelope host, house can choose a favorable secret before commit if the game uses only that secret without a player contribution.

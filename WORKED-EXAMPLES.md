@@ -1,38 +1,54 @@
-# Worked examples — commit-reveal
+# Worked examples — commit / reveal fallback
 
-## Example A — honest path
+`T0 = 1_700_000_000`. Timeout is 3600 seconds. Secret is `ab` repeated 32 times (64 hex). `HASH = sha256Hex(SECRET)`.
 
-```text
-secret = "aabbccdd" (and enough hex)
-hash = sha256Hex(secret)
-openRound → commit(hash) → reveal(secret) → settleReveal
-phase paid, paidTo = house
-```
+Phases: `open` → `committed` → `revealed` → `paid`, or `committed` → `slashed`.
 
-## Example B — withheld reveal
+## Honest path
 
 ```text
-commit → (no reveal) → slashTimeout(now >= commitTs + timeout)
-phase slashed, paidTo = player
+openRound(player1, house1, bond 100)
+commit(HASH)           → committed
+slashTimeout(T0+1)     → too early
+reveal(SECRET)         → revealed
+settleReveal()         → paid, paidTo house1
+slashTimeout(late)     → refused (already settled)
 ```
 
-## Example C — mismatch
+## Withheld reveal
 
-`reveal` with wrong secret → `mismatch`; phase stays **committed**. Later slash still valid after timeout.
+```text
+commit(HASH)
+slashTimeout(T0+3599)  → too early
+slashTimeout(T0+3600)  → slashed, paidTo player1
+reveal(SECRET)         → refused
+```
 
-## Example D — too early slash
+Bond `250` on the composition path. Same timing rule.
 
-`nowTs < commitTs + timeoutSec` → `too early`.
+## Mismatch still allows later slash
 
-## Example E — bounds
+Commit `HASH`, reveal `cd`×32 → `mismatch`. Round stays committed. Slash at `T0+3600` pays the player (`alice` in that test).
 
-| Input | Error |
+## Independence
+
+Round 10 settles to `house1`. Round 20 stays `committed` until slash pays `player2`. One path does not rewrite the other.
+
+## Coin from secret
+
+| Secret prefix | `coinFromSecret` |
+| --- | --- |
+| `ab` × 32 | house |
+| `aa` × 32 | player |
+
+First byte of the secret, not the hash.
+
+## Refusals
+
+| Case | Error |
 | --- | --- |
 | player === house | same party |
-| bond 0 | bad bond |
-| timeout < 60 | bad timeout |
+| bond `0` | bad bond |
 | commit hash not 64 hex | bad hash |
 
-## Example F — independent rounds
-
-Round 1 slashed, round 2 settled — no shared phase (composition).
+No token custody, no wasm, not `orng.wax`.

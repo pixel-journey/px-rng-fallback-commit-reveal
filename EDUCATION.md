@@ -1,34 +1,31 @@
-# Education — commit–reveal with bonded timeout
-
-> **Rung:** `npm test` passes. Prefer [orng.wax](https://github.com/worldwide-asset-exchange/wax-orng) on WAX.  
-> This is a **fallback** teaching model, not production randomness for mainnet games.
-
-## What you should be able to do
-
-| Level | Skill |
-| --- | --- |
-| Beginner | House commits `sha256(secret)`; reveal must match |
-| Intermediate | Timeout slash pays the player if house withholds |
-| Masterclass | Why this is weaker than orng.wax and when mismatch leaves slash available |
+# Education — commit / reveal as an RNG fallback
 
 ## Beginner
 
-Phases: `open` → `committed` → (`revealed` → `paid` to house) **or** (`slashed` → bond to player).
+House commits to a hash of a secret. Player waits. House must reveal the preimage before timeout. If it does not, the bond goes to the player.
 
-Honest path: commit → reveal matching secret → settle → house receives bond accounting.
+This is **not** WAX ORNG. It is a two-party game when an oracle is unavailable.
 
 ## Intermediate
 
-Timeout: after `commitTs + timeoutSec`, player can slash while still `committed`. Too early refused. Wrong secret → `mismatch`, phase stays `committed` so slash can still fire later.
+| Step | Rule |
+| --- | --- |
+| open | Distinct player and house; bond > 0; timeout > 0 |
+| commit | 64 lowercase hex hash |
+| reveal | `sha256(secret)` must equal the stored hash |
+| settle | After a good reveal, bond returns to house |
+| slash | Only at or after `nowTs + timeoutSec`; pays player |
 
-Composition: two rounds settle/slash independently.
+A wrong reveal does **not** move the phase. The house can still be slashed later if it never reveals the matching secret.
 
-## Masterclass
+## Masterclass (not in this repo)
 
-- House can choose not to reveal if the secret would lose a larger game — **bond must exceed** the value of cheating.
-- Commit-reveal is interactive and slow; oracles remove the withhold attack by design.
-- `coinFromSecret` is a toy parity bit, not a full game engine.
+- Holding the bond as a real token transfer.
+- `require_auth` of house on commit/reveal and player on open.
+- Combining the revealed bit with a player seed so neither party alone picks the outcome.
 
-## Will not teach
+## Outcomes
 
-Live escrow token moves, orng credits, or that this replaces wax-orng on WAX.
+1. Draw the honest path and the slash path.
+2. Show why mismatch leaves the round slashable.
+3. State that `coinFromSecret` is teaching-only and uses the first byte.

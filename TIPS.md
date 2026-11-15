@@ -1,8 +1,6 @@
-# Tips — commit-reveal fallbacks
+# Tips
 
-- Size the **bond ≥ max EV of withholding**.
-- Prefer [orng.wax](https://github.com/worldwide-asset-exchange/wax-orng) on WAX.
-- Sibling delay model: [future-block-tapos](https://github.com/pixel-journey/px-rng-fallback-future-block-tapos).
-- Use injectable `nowTs` in tests.
-
-See [ORNG-LEARNING-PATH.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/ORNG-LEARNING-PATH.md) step 6.
+- Timeout is measured from `nowTs` at open, not from the commit timestamp, in this lab. Port carefully.
+- Slash and settle are mutually exclusive ends. Tests refuse slash after settle and reveal after slash.
+- Hash the **secret bytes**, not a JSON string of the secret, or the reveal will always mismatch.
+- Player and house must be different names so a self-deal cannot slash itself for free.
