@@ -1,5 +1,16 @@
-# Security
+# Security — commit-reveal
 
-Closed: same party, zero bond, bad hash, mismatch reveal, early slash, post-settle slash, independent rounds.
+## Closed in tests
 
-Not closed: no chain signatures, no bond custody, `sha256` is Node crypto not Antelope host, house can choose a favorable secret before commit if the game uses only that secret without a player contribution.
+| Issue | Behavior |
+| --- | --- |
+| Same party / bad bond / bad hash | refused |
+| Early slash | too early |
+| Mismatch reveal | mismatch |
+| Slash pays player; settle pays house | tested |
+
+## Not closed
+
+House key compromise before reveal, bond size vs game EV, live custody of bond tokens, WASM sha256 parity.
+
+Teaching state machine only.
