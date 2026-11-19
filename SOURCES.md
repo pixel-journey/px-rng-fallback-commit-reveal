@@ -9,6 +9,15 @@
 
 Commit–reveal is a classic crypto-game pattern (bond + hash preimage). This lab is an **educational fallback**, not a substitute for `orng.wax` on mainnet.
 
+## Product facts locked by tests
+
+- House posts a **bond** and a **commitment**; player waits for reveal.
+- Timeout without reveal: bond is **slashed to the player**.
+- Honest reveal: bond settles back to the **house**.
+- Wrong secret is `mismatch` — does **not** move funds or flip phase to revealed.
+- Same party as player and house is refused. Bond 0 and non-64-hex commit are refused.
+- `coinFromSecret` is a teaching map from the secret, not live RNG fairness proof by itself.
+
 ## Related labs
 
 | Lab | Topic |
