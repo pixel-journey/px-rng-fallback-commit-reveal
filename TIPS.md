@@ -30,4 +30,4 @@ Educational alternative when `orng.wax` is unavailable. Prefer [wax-orng](https:
 | TAPOS delay instead of house reveal | [future-block TAPOS](https://github.com/pixel-journey/px-rng-fallback-future-block-tapos) |
 | League of Entropy time gate | [drand](https://github.com/pixel-journey/px-rng-fallback-drand-bls-verifier) |
 
-Related: [TAPOS](https://github.com/pixel-journey/px-rng-fallback-future-block-tapos) · [drand](https://github.com/pixel-journey/px-rng-fallback-drand-bls-verifier) · [dual-callback](https://github.com/pixel-journey/px-orng-dual-callback-idempotent) · [ORNG path](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/ORNG-LEARNING-PATH.md)
+Related: [TAPOS](https://github.com/pixel-journey/px-rng-fallback-future-block-tapos) · [drand](https://github.com/pixel-journey/px-rng-fallback-drand-bls-verifier) · [dual-callback](https://github.com/pixel-journey/px-orng-dual-callback-idempotent) · `px-contract-examples-vault` (private index; not this public course)

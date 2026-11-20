@@ -26,4 +26,4 @@ Commit–reveal is a classic crypto-game pattern (bond + hash preimage). This la
 | [drand](https://github.com/pixel-journey/px-rng-fallback-drand-bls-verifier) | Post-bet public beacon |
 | [quorum](https://github.com/pixel-journey/px-rng-fallback-multi-oracle-quorum) | M-of-N reports |
 | [dual-callback](https://github.com/pixel-journey/px-orng-dual-callback-idempotent) | Once-resolve on orng paths |
-| [ORNG path](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/ORNG-LEARNING-PATH.md) | Full curriculum order |
+| `px-contract-examples-vault` (private index; not this public course) | Full curriculum order |
