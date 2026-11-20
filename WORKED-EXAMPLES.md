@@ -18,10 +18,25 @@ Secret `ab`×32; `HASH = sha256Hex(SECRET)`.
 
 ## Shape refusals
 
-Same party player/house → `same party`. Bond 0 → `bad bond`. Commit hash not 64 hex → `bad hash`.
+| Input | Result |
+| --- | --- |
+| same party player/house | `same party` |
+| bond 0 | `bad bond` |
+| commit hash not 64 hex | `bad hash` |
 
-## coinFromSecret
+## coinFromSecret (teaching only)
 
-First byte even-ish path: `ab`×32 → `"house"`; `aa`×32 → `"player"` (deterministic teaching coin, not live RNG).
+| Secret | coin |
+| --- | --- |
+| `ab`×32 | `"house"` |
+| `aa`×32 | `"player"` |
 
-Withheld reveal after timeout pays the **player** the bond. Honest reveal settles bond back to **house**.
+Deterministic teaching coin — **not** live RNG fairness by itself.
+
+## Bond economics (locked)
+
+| Outcome | Who gets the bond |
+| --- | --- |
+| Timeout (no reveal) | **player** (slash) |
+| Honest reveal + settle | **house** |
+| Mismatch | funds **not** moved; phase stays unrevealed |
